@@ -8,7 +8,7 @@
 /// This software is completely free to use for purposes of personal study. 
 /// For distribution, modification, commercial use or other purposes you must 
 /// comply with the terms of the licence originally supplied with it in 
-/// the file Licence.txt or at http://andl.org/Licence.txt.
+/// the file Licence.txt or at http://andl.org/Licence/.
 ///
 using System;
 using System.Linq;
