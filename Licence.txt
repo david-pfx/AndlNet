@@ -1,0 +1,45 @@
+Preamble
+========
+
+This is the Licence.txt file to accompany the distribution of ANdl and Andl.NET. 
+It is effective as at August 2016.
+
+This licence is preliminary, to allow others to study or use the software, but to 
+(a) encourage potential users to acquire a copy of the software directly from 
+    me at https://github.com/davidandl/Andl
+(b) discourage commercial use until the software is more stable.
+
+Copyright Notice
+================
+
+Copyright © David M. Bennett 2015-16 as an unpublished work. All rights reserved.
+
+This software is provided in the hope that it will be useful, but with 
+absolutely no warranties. You assume all responsibility for its use.
+
+This software is completely free to use for purposes of personal study. 
+For distribution, modification, commercial use or other purposes you must 
+comply with the terms of the licence originally supplied with it in 
+the file Licence.txt or at http://andl.org/Licence.txt.
+
+
+Licence
+=======
+
+Redistribution and use of this software in source and binary forms, with or 
+without modification, are permitted on the following conditions:
+
+1. Redistributions of source code must retain the above copyright notice and be
+   accompanied by this licence file. If modified, they must be accompanied by a 
+   copy of the original from which they were derived.
+
+2. Redistributions in binary form must reproduce the above copyright notice 
+   in the software and in the documentation.
+
+3. Versions of this software released with a "non-production" designation are 
+   not to be used in software distributed commercially without specific written 
+   permission.
+
+This software is provided by the copyright holders and contributors "as is" and
+any express or implied warranties are explicitly disclaimed to the maximum extent
+permitted by law. You agree to assume all responsibility for its use.
