@@ -123,8 +123,7 @@ The source code files contain the following notice.
 /// This software is completely free to use for purposes of personal study. 
 /// For distribution, modification, commercial use or other purposes you must 
 /// comply with the terms of the licence originally supplied with it in 
-/// the file Licence.txt or at http://andl.org/Licence.txt.
-///
+/// the file Licence.txt or at http://andl.org/Licence/.
 
 So this version of Andl is free for any kind of experimental use, especially
 helping to make it better. For now, the licence does impose some conditions on
