@@ -1,4 +1,16 @@
-﻿using System;
+﻿/// Andl is A New Data Language. See andl.org.
+///
+/// Copyright © David M. Bennett 2015-16 as an unpublished work. All rights reserved.
+///
+/// This software is provided in the hope that it will be useful, but with 
+/// absolutely no warranties. You assume all responsibility for its use.
+/// 
+/// This software is completely free to use for purposes of personal study. 
+/// For distribution, modification, commercial use or other purposes you must 
+/// comply with the terms of the licence originally supplied with it in 
+/// the file Licence.txt or at http://andl.org/Licence.txt.
+///
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,18 +73,18 @@ using Andl.Common;
     public static object[] ToObject(object[] row, CommonField[] heading) {
       var values = Enumerable.Range(0, row.Length).Select(x => {
         var rawvalue = row[x] as string;
-        if (rawvalue == null) throw NdlError.Fatal($"bad raw value {heading[x].Name} = {row[x]}");
+        if (rawvalue == null) throw Error.Fatal($"bad raw value {heading[x].Name} = {row[x]}");
         var value = ToObjectDict[heading[x].CType](rawvalue);
-        if (value == null) throw NdlError.Fatal($"bad value {heading[x].Name} = {row[x]}");
+        if (value == null) throw Error.Fatal($"bad value {heading[x].Name} = {row[x]}");
         return value;
       }).ToArray();
       return values;
     }
 
     public static object StringToCommon(string rawvalue, CommonType ctype, string name) {
-      if (rawvalue == null) throw NdlError.NullArg("rawvalue");
+      if (rawvalue == null) throw Error.NullArg("rawvalue");
       var value = ToObjectDict[ctype](rawvalue);
-      if (value == null) throw NdlError.Fatal($"bad value {name} = {value}");
+      if (value == null) throw Error.Fatal($"bad value {name} = {value}");
       return value;
     }
 

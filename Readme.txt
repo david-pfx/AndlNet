@@ -111,9 +111,24 @@ that runs the samples, a class file generator, class library and unit tests.
 LICENCE
 =======
 
-This version of Andl is free for any kind of experimental use, especially
-helping to make it better. For now, the licence does not grant rights for 
-distribution or commercial use. That will have to wait until I can choose the 
-right licence, which depends a lot on who might want to use it.
+The source code files contain the following notice.
+
+/// Andl is A New Data Language. See andl.org.
+///
+/// Copyright © David M. Bennett 2015-16 as an unpublished work. All rights reserved.
+///
+/// This software is provided in the hope that it will be useful, but with 
+/// absolutely no warranties. You assume all responsibility for its use.
+/// 
+/// This software is completely free to use for purposes of personal study. 
+/// For distribution, modification, commercial use or other purposes you must 
+/// comply with the terms of the licence originally supplied with it in 
+/// the file Licence.txt or at http://andl.org/Licence.txt.
+///
+
+So this version of Andl is free for any kind of experimental use, especially
+helping to make it better. For now, the licence does impose some conditions on
+distribution or commercial use, so read the licence if you need to. I expect 
+that to change, but it will depend on feedback from those who want to use it.
 
 Please contact me with any questions or suggestions at david@andl.org.

@@ -1,4 +1,16 @@
-﻿using System;
+﻿/// Andl is A New Data Language. See andl.org.
+///
+/// Copyright © David M. Bennett 2015-16 as an unpublished work. All rights reserved.
+///
+/// This software is provided in the hope that it will be useful, but with 
+/// absolutely no warranties. You assume all responsibility for its use.
+/// 
+/// This software is completely free to use for purposes of personal study. 
+/// For distribution, modification, commercial use or other purposes you must 
+/// comply with the terms of the licence originally supplied with it in 
+/// the file Licence.txt or at http://andl.org/Licence.txt.
+///
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,11 +52,11 @@ namespace AndlN.Generator {
         if (!options.Parse(args))
           return;
         SourceKind skind;
-        if (!Enum.TryParse(options.GetPath(0), true, out skind)) throw NdlError.Fatal("invalid source kind");
+        if (!Enum.TryParse(options.GetPath(0), true, out skind)) throw Error.Fatal("invalid source kind");
         var rootname = options.GetPath(1);
         var connection = options.GetPath(2);
-        if (connection == null) throw NdlError.Fatal("three arguments required");
-        if (rootname == null) throw NdlError.Fatal("data source must have a name");
+        if (connection == null) throw Error.Fatal("three arguments required");
+        if (rootname == null) throw Error.Fatal("data source must have a name");
         Logger.WriteLine(1, $"{skind} {rootname} {connection}");
 
         var tw = new StringWriter();

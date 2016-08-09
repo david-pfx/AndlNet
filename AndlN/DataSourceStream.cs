@@ -1,11 +1,14 @@
 ﻿/// Andl is A New Data Language. See andl.org.
 ///
-/// Copyright © David M. Bennett 2015 as an unpublished work. All rights reserved.
+/// Copyright © David M. Bennett 2015-16 as an unpublished work. All rights reserved.
 ///
-/// If you have received this file directly from me then you are hereby granted 
-/// permission to use it for personal study. For any other use you must ask my 
-/// permission. Not to be copied, distributed or used commercially without my 
-/// explicit written permission.
+/// This software is provided in the hope that it will be useful, but with 
+/// absolutely no warranties. You assume all responsibility for its use.
+/// 
+/// This software is completely free to use for purposes of personal study. 
+/// For distribution, modification, commercial use or other purposes you must 
+/// comply with the terms of the licence originally supplied with it in 
+/// the file Licence.txt or at http://andl.org/Licence.txt.
 ///
 using System;
 using System.Linq;
@@ -78,7 +81,7 @@ namespace AndlN {
       case SourceKind.Odbc:
         return DataSourceOdbc.Create(locator);
       default:
-        throw NdlError.Argument($"bad source: {source}");
+        throw Error.Argument($"bad source: {source}");
       }
     }
 
@@ -132,7 +135,7 @@ namespace AndlN {
 
     public override IEnumerator<object[]> GetEnumerator() {
       var path = GetPath();
-      if (!File.Exists(path)) throw NdlError.Fatal("no such file {path}");
+      if (!File.Exists(path)) throw Error.Fatal("no such file {path}");
       using (var rdr = new TextFieldParser(path) {
         TextFieldType = FieldType.Delimited,
         Delimiters = new string[] { "," },

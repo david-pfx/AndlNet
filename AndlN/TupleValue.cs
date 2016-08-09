@@ -1,4 +1,16 @@
-﻿using System;
+﻿/// Andl is A New Data Language. See andl.org.
+///
+/// Copyright © David M. Bennett 2015-16 as an unpublished work. All rights reserved.
+///
+/// This software is provided in the hope that it will be useful, but with 
+/// absolutely no warranties. You assume all responsibility for its use.
+/// 
+/// This software is completely free to use for purposes of personal study. 
+/// For distribution, modification, commercial use or other purposes you must 
+/// comply with the terms of the licence originally supplied with it in 
+/// the file Licence.txt or at http://andl.org/Licence.txt.
+///
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -120,7 +132,7 @@ namespace AndlN {
     // else return new instance, possibly with shared heading
     // does not access field data, which may not yet exist
     static public TupleType GetInstance(Type objtype) {
-      if (objtype == null) throw NdlError.NullArg("objtype");
+      if (objtype == null) throw Error.NullArg("objtype");
       if (_typedict.ContainsKey(objtype)) return _typedict[objtype];
 
       // include public non-static fields and properties only
@@ -159,7 +171,7 @@ namespace AndlN {
 
     // explicit check, but really the same as Equals
     public bool SameHeading(TupleType other) {
-      if (other == null) throw NdlError.NullArg("other");
+      if (other == null) throw Error.NullArg("other");
       return other._heading == _heading; // must actually be the same
     }
 
@@ -173,7 +185,7 @@ namespace AndlN {
     // Calculate hash code for a tuple, which must be of this tuple type
     // Note: must not call until values have been set
     public int GetHashCode(object tuple) {
-      if (tuple == null) throw NdlError.NullArg("tuple");
+      if (tuple == null) throw Error.NullArg("tuple");
       // use first value to compute hash code
       return (_members.Length == 0) ? -1 : GetMemberValue(tuple, _members[0]).GetHashCode();
     }
@@ -187,8 +199,8 @@ namespace AndlN {
 
     // Equals check for tuples of unknown type
     public static bool AreEqual(object tuple, object other) {
-      if (tuple == null) throw NdlError.NullArg("tuple");
-      if (other == null) throw NdlError.NullArg("other");
+      if (tuple == null) throw Error.NullArg("tuple");
+      if (other == null) throw Error.NullArg("other");
       var tuplet = GetInstance(tuple.GetType());
       var othert = GetInstance(other.GetType());
       if (tuplet.GetHashCode(tuple) != othert.GetHashCode(other)) return false;
@@ -205,12 +217,12 @@ namespace AndlN {
     // Import data from an object with the same fields and types
     // Can only be done before hashcode calculated.
     static internal void ImportData(object tuple, object source) {
-      if (tuple == null) throw NdlError.NullArg("tuple");
-      if (source == null) throw NdlError.NullArg("source");
+      if (tuple == null) throw Error.NullArg("tuple");
+      if (source == null) throw Error.NullArg("source");
       //if (tuple._hashcode != 0) throw Error.NullArg("source"); // FIX:how to do?
       var tuplet = GetInstance(tuple.GetType());
       var othert = GetInstance(source.GetType());
-      if (!tuplet.SameHeading(othert)) throw NdlError.Assert("heading mismatch");
+      if (!tuplet.SameHeading(othert)) throw Error.Assert("heading mismatch");
       var tfields = tuplet._members;
       var ofields = othert._members;
       // same fields same order
@@ -221,9 +233,9 @@ namespace AndlN {
     // Import data from an array of objects of the correct types and a heading
     // Can only be done before hashcode calculated.
     static internal void ImportData(object tuple, object[] source, CommonField[] heading) {
-      if (tuple == null) throw NdlError.NullArg("tuple");
-      if (source == null) throw NdlError.NullArg("source");
-      if (heading == null) throw NdlError.NullArg("heading");
+      if (tuple == null) throw Error.NullArg("tuple");
+      if (source == null) throw Error.NullArg("source");
+      if (heading == null) throw Error.NullArg("heading");
       //if (tuple._hashcode != 0) throw Error.NullArg("source"); // FIX:how to do?
       var tuplet = GetInstance(tuple.GetType());
       var tfields = tuplet._members;
@@ -231,14 +243,14 @@ namespace AndlN {
       for (var x = 0; x < tfields.Length; ++x) {
         var tfname = tfields[x].Name;
         var pos = Array.FindIndex(heading, h => h.Name == tfname);
-        if (pos == -1) throw NdlError.Invalid($"missing {tfname}");
+        if (pos == -1) throw Error.Invalid($"missing {tfname}");
         SetMemberValue(tuple, tfields[x], source[pos]);
       }
     }
 
     // get member type which could be field or property
     static internal Type GetMemberType(MemberInfo minfo) {
-      if (minfo == null) throw NdlError.NullArg("tuple");
+      if (minfo == null) throw Error.NullArg("tuple");
       return (minfo is FieldInfo) ? (minfo as FieldInfo).FieldType
         : (minfo as PropertyInfo).PropertyType;
     }
@@ -398,7 +410,7 @@ namespace AndlN {
     // Check that hash code was computed on first use
     // Deferred until data is available
     public override int GetHashCode() {
-      if (_hashcode == 0) throw NdlError.Invalid("GetHashCode");
+      if (_hashcode == 0) throw Error.Invalid("GetHashCode");
       return _hashcode;
     }
 
@@ -411,7 +423,7 @@ namespace AndlN {
     // Override Equals and delegate
     public override bool Equals(object obj) {
       var other = obj as TupleValue;
-      if (other == null) throw NdlError.Invalid("obj");
+      if (other == null) throw Error.Invalid("obj");
       return TupleType.AreEqual(this, other);
     }
 

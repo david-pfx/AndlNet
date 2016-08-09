@@ -1,11 +1,14 @@
 /// Andl is A New Data Language. See andl.org.
 ///
-/// Copyright © David M. Bennett 2015 as an unpublished work. All rights reserved.
+/// Copyright © David M. Bennett 2015-16 as an unpublished work. All rights reserved.
 ///
-/// If you have received this file directly from me then you are hereby granted 
-/// permission to use it for personal study. For any other use you must ask my 
-/// permission. Not to be copied, distributed or used commercially without my 
-/// explicit written permission.
+/// This software is provided in the hope that it will be useful, but with 
+/// absolutely no warranties. You assume all responsibility for its use.
+/// 
+/// This software is completely free to use for purposes of personal study. 
+/// For distribution, modification, commercial use or other purposes you must 
+/// comply with the terms of the licence originally supplied with it in 
+/// the file Licence.txt or at http://andl.org/Licence.txt.
 ///
 using System;
 using System.IO;
@@ -15,10 +18,6 @@ using System.Text;
 using Andl.Common;
 
 namespace Andl.Common {
-  [Serializable]
-  public class UtilAssertException : AndlException {
-    internal UtilAssertException(string msg) : base(msg) { }
-  }
   /// <summary>
   /// Operates a glass teletype on a supplied file or console
   /// 
@@ -95,7 +94,7 @@ namespace Andl.Common {
         var msg = String.Format(format, args);
         //Write(0, msg, true);
         Flush();
-        throw new UtilAssertException(msg);
+        throw Error.Assert(msg);
       }
     }
     public static void Assert(bool test, object thing = null) {
@@ -103,13 +102,8 @@ namespace Andl.Common {
         var msg = $"<<{thing}>>";
         //var msg = (thing == null ? "" : ("<" + thing.ToString() + ">"));
         Flush();
-        throw new UtilAssertException(msg);
+        throw Error.Assert(msg);
       }
-    }
-    public static UtilAssertException Fatal(object thing = null) {
-      var msg = (thing == null ? "" : ("<" + thing.ToString() + ">"));
-      Flush();
-      return new UtilAssertException(msg);
     }
 
     //--- impl

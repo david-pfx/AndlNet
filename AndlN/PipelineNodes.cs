@@ -1,4 +1,16 @@
-﻿using System;
+﻿/// Andl is A New Data Language. See andl.org.
+///
+/// Copyright © David M. Bennett 2015-16 as an unpublished work. All rights reserved.
+///
+/// This software is provided in the hope that it will be useful, but with 
+/// absolutely no warranties. You assume all responsibility for its use.
+/// 
+/// This software is completely free to use for purposes of personal study. 
+/// For distribution, modification, commercial use or other purposes you must 
+/// comply with the terms of the licence originally supplied with it in 
+/// the file Licence.txt or at http://andl.org/Licence.txt.
+///
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +49,7 @@ namespace AndlN {
 
     //--- interfaces
     public virtual IEnumerator<Tresult> GetEnumerator() {
-      throw NdlError.MustOverride("GetEnumerator");
+      throw Error.MustOverride("GetEnumerator");
       }
 
     IEnumerator IRelatable.GetEnumerator() {
@@ -341,14 +353,14 @@ namespace AndlN {
     public override IEnumerator<Tresult> GetEnumerator() {
       // no grouper? Just an aggregation
       if (_grouper == null) {
-        if (_aggregator == null) throw NdlError.NullArg("grouper and aggregator");
+        if (_aggregator == null) throw Error.NullArg("grouper and aggregator");
         Taggregate aggregate = _seed;
         foreach (var item in _source) {
           aggregate = _aggregator(item as Tsource, aggregate);
-          if (aggregate == null) throw NdlError.NullArg("aggregate result");
+          if (aggregate == null) throw Error.NullArg("aggregate result");
         }
         var newitem = _selector(null, aggregate) as Tresult;
-        if (newitem == null) throw NdlError.NullArg("selector result");
+        if (newitem == null) throw Error.NullArg("selector result");
         yield return newitem;
       } else {
         // grouper: keep groups and aggregates in dictionary
@@ -358,7 +370,7 @@ namespace AndlN {
         foreach (var item in _source) {
           Taggregate aggregate = _seed;
           var grouped = _grouper(item as Tsource);
-          if (grouped == null) throw NdlError.NullArg("group result");
+          if (grouped == null) throw Error.NullArg("group result");
           if (_aggregator == null) {
             dict[grouped] = aggregate;
           } else {
@@ -366,14 +378,14 @@ namespace AndlN {
               dict[grouped] = _aggregator(item as Tsource, aggregate);
             else {
               aggregate = _aggregator(item as Tsource, _seed);
-              if (aggregate == null) throw NdlError.NullArg("aggregate result");
+              if (aggregate == null) throw Error.NullArg("aggregate result");
               dict.Add(grouped, aggregate);
             }
           }
         }
         foreach (var entry in dict) {
           var newitem = _selector(entry.Key, entry.Value) as Tresult;
-          if (newitem == null) throw NdlError.NullArg("selector result");
+          if (newitem == null) throw Error.NullArg("selector result");
           yield return newitem;
         }
       }
@@ -436,7 +448,7 @@ namespace AndlN {
       case SetKind.Intersect: return GetIntersectEnumerator();
       case SetKind.Difference: return GetDifferenceEnumerator();
       }
-      throw NdlError.Invalid("set kind");
+      throw Error.Invalid("set kind");
     }
 
     // Union
@@ -499,8 +511,8 @@ namespace AndlN {
 
     public NdlJoinNode(IRelatable<Tsource> source, IRelatable<Tother> other,
                       Func<Tsource, Tother, Tresult> result_so, Func<Tother, Tresult> result_o) : base(source) {
-      if (other == null) throw NdlError.Invalid("other");
-      if (result_so == null && result_o == null) throw NdlError.Invalid("result");
+      if (other == null) throw Error.Invalid("other");
+      if (result_so == null && result_o == null) throw Error.Invalid("result");
       _other = other;
       _result_so = result_so;
       _result_o = result_o;
@@ -513,7 +525,7 @@ namespace AndlN {
       foreach (var pair in CommonStatic.JoinIterator(_source, _other)) { 
         var result = (_result_so == null) ? _result_o(pair.Item2) as Tresult
           : _result_so(pair.Item1, pair.Item2) as Tresult;
-        if (result == null) throw NdlError.Invalid("result");
+        if (result == null) throw Error.Invalid("result");
         if (resultset.Add(result)) yield return result;
       }
     }
@@ -551,7 +563,7 @@ namespace AndlN {
         var ismatch = keyset.Contains(key);
         if (ismatch ? _kind == JoinKind.Semijoin : _kind == JoinKind.Antijoin) {
           var result = (_result_func == null) ? left as Tresult : _result_func(left);
-          if (result == null) throw NdlError.Invalid("result");
+          if (result == null) throw Error.Invalid("result");
           if (resultset.Add(result)) yield return result;
         }
       }

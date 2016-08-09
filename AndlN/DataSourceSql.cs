@@ -1,11 +1,14 @@
 ﻿/// Andl is A New Data Language. See andl.org.
 ///
-/// Copyright © David M. Bennett 2015 as an unpublished work. All rights reserved.
+/// Copyright © David M. Bennett 2015-16 as an unpublished work. All rights reserved.
 ///
-/// If you have received this file directly from me then you are hereby granted 
-/// permission to use it for personal study. For any other use you must ask my 
-/// permission. Not to be copied, distributed or used commercially without my 
-/// explicit written permission.
+/// This software is provided in the hope that it will be useful, but with 
+/// absolutely no warranties. You assume all responsibility for its use.
+/// 
+/// This software is completely free to use for purposes of personal study. 
+/// For distribution, modification, commercial use or other purposes you must 
+/// comply with the terms of the licence originally supplied with it in 
+/// the file Licence.txt or at http://andl.org/Licence.txt.
 ///
 using System;
 using System.Collections.Generic;
@@ -104,7 +107,7 @@ namespace AndlN {
         var value = row[fieldname];
         return (value == null || value == DBNull.Value) ? CommonConverter.GetDefault(ctype) : value;
       } catch(Exception) {
-        throw NdlError.Fatal($"bad field {fieldname}");
+        throw Error.Fatal($"bad field {fieldname}");
       }
     }
 
@@ -142,7 +145,7 @@ namespace AndlN {
       try {
         ds._connection = new SqlConnection(locator);
       } catch(Exception ex) {
-        throw NdlError.Fatal($"Sql: {ex.Message}");
+        throw Error.Fatal($"Sql: {ex.Message}");
       }
       ds._convdict = new Dictionary<string, CommonType> {
         { "char", CommonType.Text },
@@ -175,7 +178,7 @@ namespace AndlN {
       try {
         _connection.Open();
       } catch (Exception ex) {
-        throw NdlError.Fatal($"Sql: {ex.Message}");
+        throw Error.Fatal($"Sql: {ex.Message}");
       }
       return cmd.ExecuteReader();
     }
@@ -207,7 +210,7 @@ namespace AndlN {
       try {
         ds._connection = new OdbcConnection(locator);
       } catch (Exception ex) {
-        throw NdlError.Fatal($"Sql: {ex.Message}");
+        throw Error.Fatal($"Sql: {ex.Message}");
       }
       ds._convdict = new Dictionary<string, CommonType> {
         { "CHAR", CommonType.Text },
@@ -225,7 +228,7 @@ namespace AndlN {
       try {
         _connection.Open();
       } catch (Exception ex) {
-        throw NdlError.Fatal($"Source Odbc {ex.Message}");
+        throw Error.Fatal($"Source Odbc {ex.Message}");
       }
       return cmd.ExecuteReader();
     }
@@ -257,7 +260,7 @@ namespace AndlN {
       try {
         ds._connection = new OleDbConnection(locator);
       } catch (Exception ex) {
-        throw NdlError.Fatal($"Source OleDb: {ex.Message}");
+        throw Error.Fatal($"Source OleDb: {ex.Message}");
       }
       ds._convdict = new Dictionary<string, CommonType> {
         { "DBTYPE_BOOL", CommonType.Bool },
@@ -275,7 +278,7 @@ namespace AndlN {
       try {
         _connection.Open();
       } catch (Exception ex) {
-        throw NdlError.Fatal($"Source OleDb: {ex.Message}");
+        throw Error.Fatal($"Source OleDb: {ex.Message}");
       }
       return cmd.ExecuteReader();
     }
